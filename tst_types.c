@@ -90,7 +90,9 @@ struct type {
   int type_mapping[MAX_TYPES];
 };
 
-static struct type types[32] = {
+static struct type types[32];
+static void __attribute__((__constructor__)) types_init() {
+  struct type types1[32] = {
 /* Standard C Types */
       {MPI_CHAR,              "MPI_CHAR",             0, sizeof (char), TST_MPI_CHAR, 1, {TST_MPI_CHAR}},
       {MPI_UNSIGNED_CHAR,     "MPI_UNSIGNED_CHAR",    0, sizeof (unsigned char), TST_MPI_UNSIGNED_CHAR, 1, {TST_MPI_UNSIGNED_CHAR}},
@@ -184,7 +186,10 @@ static struct type types[32] = {
       * The last element
       */
       {MPI_DATATYPE_NULL,     "",                     0, 0, 0, 0, {TST_MPI_INT}}
-};
+  };
+  memcpy(types, types1, 32 * sizeof (struct type));
+}
+
 
 int tst_type_init (int * num_types)
 {
