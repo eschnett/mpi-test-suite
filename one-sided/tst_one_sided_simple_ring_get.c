@@ -21,7 +21,10 @@ static char * recv_buffer = NULL;
 
 /* XXX the following could maybe put into the env */
 static MPI_Aint send_buffer_size = 0;
-static MPI_Win send_win = MPI_WIN_NULL;
+static MPI_Win send_win;
+static void __attribute__((__constructor__)) send_win_init() {
+  send_win = MPI_WIN_NULL;
+}
 
 int tst_one_sided_simple_ring_get_init (struct tst_env * env)
 {

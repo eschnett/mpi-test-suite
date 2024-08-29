@@ -16,7 +16,10 @@
 
 /* XXX CN Could maybe placed into env */
 static MPI_Aint recv_buffer_size = 0;
-static MPI_Win recv_win = MPI_WIN_NULL;
+static MPI_Win recv_win;
+static void __attribute__((__constructor__)) recv_win_init() {
+  recv_win = MPI_WIN_NULL;
+}
 
 int tst_one_sided_simple_ring_put_init (struct tst_env * env)
 {

@@ -16,9 +16,14 @@
 
 /* XXX CN could maybe placed into env */
 static MPI_Aint send_buffer_size = 0;
-static MPI_Win send_win = MPI_WIN_NULL;
-static MPI_Group group_from = MPI_GROUP_NULL;
-static MPI_Group group_to = MPI_GROUP_NULL;
+static MPI_Win send_win;
+static MPI_Group group_from;
+static MPI_Group group_to;
+static void __attribute__((__constructor__)) constants_init() {
+  send_win = MPI_WIN_NULL;
+  group_from = MPI_GROUP_NULL;
+  group_to = MPI_GROUP_NULL;
+}
 
 int tst_one_sided_simple_ring_get_post_init (struct tst_env * env)
 {
